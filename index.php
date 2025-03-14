@@ -1,25 +1,25 @@
 <?php
-require_once 'config.php';
-
+require_once __DIR__ . '/config.php';
 // 微信配置参数
 define('WX_TOKEN', 'qweqwe');          // 原Token
 define('WX_NEW_TOKEN', 'new_token');   // 新增Token
 define('WX_APPID', 'your_appid');
 define('WX_ENCODING_AESKEY', 'pvh2j7LuYWFFOWboCf0WNq4D2Pgnpe4MdUZASGjnYGw');
 
-// 统一回复小尾巴
-define('REPLY_SUFFIX', "\n\n—— 客服小助手，欢迎使用！");
+// 数据库配置
 
-// 检查是否为直接访问
 if (!isset($_GET['signature'], $_GET['timestamp'], $_GET['nonce'])) {
     header("Location: admin.php");
     exit();
 }
 
+// 统一回复小尾巴
+define('REPLY_SUFFIX', "\n\n—— 客服小助手");
+
 // 验证微信服务器
-$signature = $_GET["signature"];
-$timestamp = $_GET["timestamp"];
-$nonce = $_GET["nonce"];
+$signature = $_GET["signature"] ?? '';
+$timestamp = $_GET["timestamp"] ?? '';
+$nonce = $_GET["nonce"] ?? '';
 $echostr = $_GET["echostr"] ?? '';
 $encrypt_type = $_GET["encrypt_type"] ?? 'raw';
 
@@ -127,7 +127,7 @@ function queryKeyword($keyword) {
     static $conn = null;
     
     if (!$conn) {
-        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         mysqli_set_charset($conn, 'utf8mb4');
     }
     
