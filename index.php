@@ -1,23 +1,25 @@
 <?php
+require_once 'config.php';
+
 // 微信配置参数
-define('WX_TOKEN', 'qweqwe'); // 原Token
-define('WX_NEW_TOKEN', 'new_token');     // 新增Token
+define('WX_TOKEN', 'qweqwe');          // 原Token
+define('WX_NEW_TOKEN', 'new_token');   // 新增Token
 define('WX_APPID', 'your_appid');
 define('WX_ENCODING_AESKEY', 'pvh2j7LuYWFFOWboCf0WNq4D2Pgnpe4MdUZASGjnYGw');
-
-// 数据库配置
-define('DB_HOST', 'mysql.ct8.pl');
-define('DB_USER', 'm50503_wx');
-define('DB_PASS', 'Aa123456789');
-define('DB_NAME', 'm50503_wx');
 
 // 统一回复小尾巴
 define('REPLY_SUFFIX', "\n\n—— 客服小助手，欢迎使用！");
 
+// 检查是否为直接访问
+if (!isset($_GET['signature'], $_GET['timestamp'], $_GET['nonce'])) {
+    header("Location: admin.php");
+    exit();
+}
+
 // 验证微信服务器
-$signature = $_GET["signature"] ?? '';
-$timestamp = $_GET["timestamp"] ?? '';
-$nonce = $_GET["nonce"] ?? '';
+$signature = $_GET["signature"];
+$timestamp = $_GET["timestamp"];
+$nonce = $_GET["nonce"];
 $echostr = $_GET["echostr"] ?? '';
 $encrypt_type = $_GET["encrypt_type"] ?? 'raw';
 
@@ -134,7 +136,7 @@ function queryKeyword($keyword) {
     $stmt->execute();
     
     if ($result = $stmt->get_result()) {
-        return $result->num_rows > 0 
+        return $result->num_rows > 0
             ? $result->fetch_assoc()['content']
             : "未找到相关内容";
     }
