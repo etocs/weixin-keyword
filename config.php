@@ -21,10 +21,10 @@ header('X-Content-Type-Options: nosniff');
 header('X-XSS-Protection: 1; mode=block');
 
 // 数据库配置
-define('DB_HOST', 'mysql.ct8.pl');
-define('DB_USER', 'm50503_wx');
-define('DB_PASSWORD', 'Aa123456789');
-define('DB_NAME', 'm50503_wx');
+define('DB_HOST', '******');
+define('DB_USER', '***********');
+define('DB_PASSWORD', '**********');
+define('DB_NAME', '********');
 
 // 应用常量
 define('IN_APP', true);
